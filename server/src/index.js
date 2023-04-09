@@ -1,3 +1,4 @@
+import { ChatGPTAPIBrowser } from 'chatgpt';
 import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
@@ -12,6 +13,11 @@ app.use(cors());
 
 app.get('/api', ( req, res ) => {
   res.json({ message: "Hello world", });
+});
+
+app.post('/api', async ( req, res ) => {
+  const { promp } = req.body;
+  console.log(promp);
 });
 
 app.listen(PORT, () => {
