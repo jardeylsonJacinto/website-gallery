@@ -1,12 +1,13 @@
 import React, { useState } from "react";
+import Loading from "./components/Loading";
 
 const App = () => {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // calls the async function
     sendDescription();
     setDescription("");
     setLoading(true);
@@ -25,11 +26,16 @@ const App = () => {
         },
       });
       const res = await request.json();
-      console.log(res);
+      if (res.message) {
+        setLoading(false);
+        setResult(res.result);
+      }
     } catch (err) {
       console.error(err);
     }
   }
+
+  if (loading) return <Loading />;
 
   return (
     <div className="app">
@@ -44,6 +50,19 @@ const App = () => {
         />
         <button>GENERATE</button>
       </form>
+      <div className="result__container">
+        {result.length > 0 &&
+          result.map((item, index) => (
+            <div key={index}>
+              <img
+                src={`data:image/png;base64,${item.logoImage}`}
+                alt={item.domainName}
+                className="image"
+              />
+              <p>Domain: {item.domainName}</p>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
