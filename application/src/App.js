@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-async function setDescription(){
+async function sendDescription(){
   try{
     const request = await fetch('http://localhost:4000/api', {
       method: 'POST',
@@ -21,11 +21,14 @@ async function setDescription(){
 
 const App = () => {
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ description });
+
+    sendDescription();
     setDescription("");
+    setLoading(true);
   }
 
   return (
