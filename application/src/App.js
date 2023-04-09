@@ -1,23 +1,5 @@
 import React, { useState } from "react";
 
-async function sendDescription() {
-  try {
-    const request = await fetch("http://localhost:4000/api", {
-      method: "POST",
-      body: JSON.stringify({
-        prompt: description,
-      }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    const res = await request.json();
-    console.log(res);
-  } catch (err) {
-    console.error(err);
-  }
-}
 const App = () => {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,6 +11,25 @@ const App = () => {
     setDescription("");
     setLoading(true);
   };
+
+  async function sendDescription() {
+    try {
+      const request = await fetch("http://localhost:4000/api", {
+        method: "POST",
+        body: JSON.stringify({
+          prompt: description,
+        }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await request.json();
+      console.log(res);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <div className="app">
