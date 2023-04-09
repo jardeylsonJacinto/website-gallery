@@ -1,5 +1,24 @@
 import React, { useState } from 'react';
 
+async function setDescription(){
+  try{
+    const request = await fetch('http://localhost:4000/api', {
+      method: 'POST',
+      body: JSON.stringify({
+        prompt: description,
+      }),
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    const res = await request.json();
+    console.log(res);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 const App = () => {
   const [description, setDescription] = useState("");
 
